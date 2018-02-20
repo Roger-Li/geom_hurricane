@@ -1,1 +1,1 @@
-## TO DO: finish it on Tuesday
+#TO DO: finish it on Tuesday, read the project descriptions thoroughly first
