@@ -38,7 +38,8 @@ make_tidy_tracks <- function(dir = "data", filename="ebtrk_atlc_1988_2015.txt"){
   
   ext_tracks <- read_fwf(filepath, 
                          fwf_widths(ext_tracks_widths, ext_tracks_colnames),
-                         na = "-99")
+                         na = "-99",
+                         col_types = cols())
   
   tidy_tracks <- ext_tracks %>%
     mutate(storm_id = paste0(storm_name, "-", year),
@@ -47,11 +48,11 @@ make_tidy_tracks <- function(dir = "data", filename="ebtrk_atlc_1988_2015.txt"){
     select(storm_id, date, latitude, longitude, 
            starts_with("radius")) %>%
     gather(key = variable, value = wind, radius_34_ne:radius_64_nw, na.rm = TRUE)  %>%
-    separate(variable, into=c("dump","wind_speed", "quad"), sep="_") %>%
-    unite(variable, dump, wind_speed, remove=FALSE) %>%
-    spread(quad, wind) %>%
+    separate(variable, into=c("dup","wind_speed", "quadrant"), sep="_") %>%
+    unite(variable, dup, wind_speed, remove=FALSE) %>%
+    spread(quadrant, wind) %>%
     mutate(wind_speed = as.factor(wind_speed)) %>%
-    select(-dump, -variable) 
+    select(-dup, -variable) 
 }
 
 
