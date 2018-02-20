@@ -7,7 +7,8 @@ library(lubridate)
 #'Reads in the Extended Best Tract hurricane data and 
 #'returns a tibble for visualization
 #'
-#' @params NULL
+#' @param dir, directory of the input data
+#' @param filename, the input file
 #'
 #' @return Returns a tibble, enhanced implementation of data.frame
 #'   (see \code{\link{tibble}}).
@@ -21,7 +22,9 @@ library(lubridate)
 #' 
 #' @export
 
-make_tidy_tracks <- function(){
+make_tidy_tracks <- function(dir = "data", filename="ebtrk_atlc_1988_2015.txt"){
+  filepath <- paste(dir, filename, sep = "/")
+  
   ext_tracks_widths <- c(7, 10, 2, 2, 3, 5, 5, 6, 4, 5, 4, 4, 5, 3, 4, 3, 3, 3,
                          4, 3, 3, 3, 4, 3, 3, 3, 2, 6, 1)
   ext_tracks_colnames <- c("storm_id", "storm_name", "month", "day",
@@ -33,7 +36,7 @@ make_tidy_tracks <- function(){
                            paste("radius_64", c("ne", "se", "sw", "nw"), sep = "_"),
                            "storm_type", "distance_to_land", "final")
   
-  ext_tracks <- read_fwf("data/ebtrk_atlc_1988_2015.txt", 
+  ext_tracks <- read_fwf(filepath, 
                          fwf_widths(ext_tracks_widths, ext_tracks_colnames),
                          na = "-99")
   
